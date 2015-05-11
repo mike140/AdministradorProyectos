@@ -7,6 +7,7 @@
 package administradorproyectos;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,7 +47,25 @@ public class proyectoController implements Initializable {
     
     @FXML
     public void crearBtn() {
+        DataBase db = new DataBase("tareas", "root", "");
         
+        if( !Validate.isCorrectSize( titulo.getText() , 100, "Titulo") )
+            return;
+        
+        if( !Validate.isCorrectSize(descripcion.getText(), 300, "Descripcion") )
+            return;
+        
+        ArrayList<Integer> lista = db.getIndexOf("proyecto", "TITULO", titulo.getText().toUpperCase() );
+        if( !lista.isEmpty() ){
+            JOptionPane.showMessageDialog(null, "Error ya existe un proyecto con el mismo titulo. Escoja otro");
+            return;
+        }
+        
+        System.out.println( fecha.getEditor().getText() );
+        String values[] = {titulo.getText(), descripcion.getText(), fecha.getEditor().getText() };
+        db.insert("proyecto", values);
+        JOptionPane.showMessageDialog(null, "Proyecto creado con exito");
+        main.cambiarDePantalla("dashboard.fxml");
     }
     
 }

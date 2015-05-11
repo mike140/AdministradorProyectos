@@ -7,6 +7,7 @@
 package administradorproyectos;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,6 +33,9 @@ public class loginController implements Initializable {
     //a ok sip ya para conectar el fxml con java aja ahora.
     
     @FXML
+    private TextField password;
+    
+    @FXML
     private Button entrarBtn;
     
     @Override
@@ -44,12 +49,31 @@ public class loginController implements Initializable {
         main.entrarGUI();
     }
     
-    @FXML // Asi declaras una funcion para que la puedas usar con los botones. ok? a ya ok ok
-    public void unafuncion() {
-        System.out.println(correo_electronico.getText());
-        //ahora para cambiar de pantalla o FXML haces esto
-        //Lo mandas llamar desde aca de esta forma:
-        AdministradorProyectos.getInstance().cambiarDePantalla("usuario.fxml");
+    @FXML
+    public void acceder(){
+        if( !Validate.isMail(correo_electronico.getText(), 100) || !Validate.isPass(password.getText(), 30) )
+            return;
+        
+        DataBase db = new DataBase("tareas", "root", "");
+        
+        ArrayList<Integer> lista = db.getIndexOf("usuario", "CORREO", correo_electronico.getText().toUpperCase() );
+        if( lista.isEmpty() ){
+            JOptionPane.showMessageDialog(null, "No existe un usuario con ese correo");
+            return;
+        }
+        
+        String pass = db.getValueOf("usuario", "PASSWORD", lista.get(0) );
+        String name = db.getValueOf("usuario", "NOMBRE", lista.get(0) );
+        
+        if( pass.matches( password.getText().toUpperCase() ) ){
+            JOptionPane.showMessageDialog(null, "Bienvenido " + name + "!");
+            AdministradorProyectos.getInstance().cambiarDePantalla("proyecto.fxml");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "La contraseña no es correcta");
+            return;
+        }
+        
     }
     
     @FXML

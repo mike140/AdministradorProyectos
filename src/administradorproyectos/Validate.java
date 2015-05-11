@@ -9,7 +9,8 @@ public class Validate {
     
     public static boolean isName(String text, int length, String field){
         if( text.matches("") ){
-            JOptionPane.showMessageDialog(null, "Error complete los campos vacíos");
+            JOptionPane.showMessageDialog(null, "Error favor de ingresar un valo para "
+                    + field);
             return false;
         }
         
@@ -30,7 +31,7 @@ public class Validate {
     
     public static boolean isPhone(String text){
         if( text.matches("") ){
-            JOptionPane.showMessageDialog(null, "Error complete los campos vacíos");
+            JOptionPane.showMessageDialog(null, "Error favor de ingresar un valor para Teléfono");
             return false;
         }
         
@@ -45,7 +46,8 @@ public class Validate {
     
     public static boolean isPositiveInt(String text, String field){
         if( text.matches("") ){
-            JOptionPane.showMessageDialog(null, "Error complete los campos vacíos");
+            JOptionPane.showMessageDialog(null, "Error favor de ingresar un valor para "
+                + field);
             return false;
         }
         
@@ -65,7 +67,7 @@ public class Validate {
     
     public static boolean isMail(String text, int length){
         if( text.matches("") ){
-            JOptionPane.showMessageDialog(null, "Error complete los campos vacíos");
+            JOptionPane.showMessageDialog(null, "Error favor de ingresar un valor par Correo");
             return false;
         }
         
@@ -81,7 +83,8 @@ public class Validate {
     
     public static boolean isCorrectSize(String text, int length, String field){
         if( text.matches("") ){
-            JOptionPane.showMessageDialog(null, "Error complete los campos vacíos");
+            JOptionPane.showMessageDialog(null, "Error favor de ingresar un valor para"
+                    + field);
             return false;
         }
         
@@ -96,7 +99,7 @@ public class Validate {
     
     public static boolean isPass(String text, int length){
         if( text.matches("") ){
-            JOptionPane.showMessageDialog(null, "Error complete los campos vacíos");
+            JOptionPane.showMessageDialog(null, "Error favor de ingresar un valor para Password");
             return false;
         }
         

@@ -7,6 +7,7 @@
 package administradorproyectos;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,14 +42,21 @@ public class registerController implements Initializable {
     
     @FXML
     public void registrarseBtn() {
+        DataBase db = new DataBase("tareas", "root", "");
+        
+        ArrayList<Integer> lista = db.getIndexOf("usuario", "CORREO", correo.getText().toUpperCase() );
+        
+        if( !lista.isEmpty() ){
+            JOptionPane.showMessageDialog(null, "Lo siento, el correo electrónico ya se encuentra registrado");
+            return;
+        }
+        
         boolean valida = main.nuevoUsuario(nombre.getText(), apellido.getText(), correo.getText(), password.getText());
         
         if(valida){
             JOptionPane.showMessageDialog(null, "Se ha registrado con éxito al Usuario");
             main.cambiarDePantalla("usuario.fxml");
         }
-            
-        return;
     }
     
 }

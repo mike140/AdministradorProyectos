@@ -39,14 +39,19 @@ public class loginController implements Initializable {
     private Button entrarBtn;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    public void initialize(URL url, ResourceBundle rb) {    
         main = AdministradorProyectos.getInstance();
     } 
     
     @FXML
     public void entrar() {
         main.entrarGUI();
+    }
+    
+    @FXML
+    public void salir() throws Exception{
+        if( JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?") == 0 )
+            System.exit(0);
     }
     
     @FXML
@@ -65,9 +70,9 @@ public class loginController implements Initializable {
         String pass = db.getValueOf("usuario", "PASSWORD", lista.get(0) );
         String name = db.getValueOf("usuario", "NOMBRE", lista.get(0) );
         
-        if( pass.matches( password.getText().toUpperCase() ) ){
+        if( pass.matches( password.getText() ) ){
             JOptionPane.showMessageDialog(null, "Bienvenido " + name + "!");
-            AdministradorProyectos.getInstance().cambiarDePantalla("proyecto.fxml");
+            AdministradorProyectos.getInstance().cambiarDePantalla("dashboard.fxml", "Proyecto");
         }
         else{
             JOptionPane.showMessageDialog(null, "La contraseña no es correcta");

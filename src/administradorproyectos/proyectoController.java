@@ -65,7 +65,7 @@ public class proyectoController implements Initializable {
         String values[] = {titulo.getText(), descripcion.getText(), fecha.getEditor().getText() };
         db.insert("proyecto", values);
         JOptionPane.showMessageDialog(null, "Proyecto creado con exito");
-        main.cambiarDePantalla("dashboard.fxml");
+        main.cambiarDePantalla("dashboard.fxml", titulo.getText() );
     }
     
 }

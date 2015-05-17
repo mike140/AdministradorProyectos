@@ -16,7 +16,7 @@
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Configuración" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Salir" />
+            <MenuItem mnemonicParsing="false" onAction="#salir" text="Salir" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Ayuda">
@@ -28,12 +28,17 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label layoutX="34.0" layoutY="27.0" text="Correo electrónico" />
-            <Label layoutX="72.0" layoutY="65.0" text="Contraseña" />
-            <TextField fx:id="correo_electronico" layoutX="141.0" layoutY="23.0" />
-            <TextField fx:id="password" layoutX="141.0" layoutY="61.0" />
+            <Label layoutX="34.0" layoutY="79.0" text="Correo electrónico" />
+            <Label layoutX="72.0" layoutY="123.0" text="Contraseña" />
+            <TextField fx:id="correo_electronico" layoutX="141.0" layoutY="75.0" />
             <Button layoutX="254.0" layoutY="179.0" mnemonicParsing="false" onAction="#acceder" text="Entrar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
             <Button layoutX="178.0" layoutY="176.0" mnemonicParsing="false" onAction="#registrarse" text="Registrarse" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="67.0" />
+            <PasswordField fx:id="password" layoutX="141.0" layoutY="119.0" />
+            <Label layoutX="69.0" layoutY="30.0" text="Task Builder" textFill="#0546dd">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
          </children>
     </AnchorPane>
   </children>

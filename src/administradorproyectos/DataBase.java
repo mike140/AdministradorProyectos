@@ -32,7 +32,7 @@ public class DataBase {
                 if( txt.equals("NULL") )
                     q1 += txt + ", ";
                 else
-                    q1 += "'" + txt.toUpperCase() + "', ";
+                    q1 += "'" + txt + "', ";
             }
             
             q1 = q1.substring( 0, q1.length()-2 ).concat(")");

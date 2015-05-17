@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -39,7 +40,10 @@ public class AdministradorProyectos extends Application {
         mainStage.setScene(scene);
         mainStage.setResizable(false);
         mainStage.show();
-        
+        mainStage.setTitle("Task Builder");
+        mainStage.centerOnScreen();
+        //mainStage.getIcons().add( new Image("\\archivos\\icon.png") );
+         
         database = new DataBase("tareas", "root", "");
     }
 
@@ -61,6 +65,7 @@ public class AdministradorProyectos extends Application {
             Scene scene = new Scene(root);
             mainStage.setScene(scene);
             mainStage.setResizable(true);
+            mainStage.centerOnScreen();
         } catch(Exception e) {
             
         }
@@ -73,6 +78,8 @@ public class AdministradorProyectos extends Application {
             Scene scene = new Scene(root);
             mainStage.setScene(scene);
             mainStage.setResizable(false);
+            mainStage.setTitle("Registro de Usuarios");
+            mainStage.centerOnScreen();
         } catch(Exception e) {
             
         }
@@ -85,6 +92,7 @@ public class AdministradorProyectos extends Application {
             Scene scene = new Scene(root);
             mainStage.setScene(scene);
             mainStage.setResizable(true);
+            mainStage.centerOnScreen();
         } catch(Exception e) {
             
         }
@@ -96,6 +104,7 @@ public class AdministradorProyectos extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
             Scene scene = new Scene(root);
             mainStage.setScene(scene);
+            mainStage.centerOnScreen();
         } catch(Exception e) {
             
         }
@@ -116,12 +125,15 @@ public class AdministradorProyectos extends Application {
     
     
     //Esta es la clase principal de el programa donde se maneja todo entonces aqui declaras tu funcion para cambiar de pantalla o conectar a BD o lo que sea
-    public void cambiarDePantalla(String screen) {
+    public void cambiarDePantalla(String screen, String title) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(screen)); //este es el archivo fxml
             Scene scene = new Scene(root);
             mainStage.setScene(scene);
             mainStage.setResizable(false);
+            mainStage.setTitle(title);
+            mainStage.centerOnScreen();
+            
         } catch(Exception e) {
             
         }

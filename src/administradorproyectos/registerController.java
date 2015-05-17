@@ -41,6 +41,12 @@ public class registerController implements Initializable {
     }
     
     @FXML
+    public void salir(){
+        if( JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?") == 0 )
+            main.cambiarDePantalla("login.fxml", "Task Builder");
+    }
+    
+    @FXML
     public void registrarseBtn() {
         DataBase db = new DataBase("tareas", "root", "");
         
@@ -55,7 +61,7 @@ public class registerController implements Initializable {
         
         if(valida){
             JOptionPane.showMessageDialog(null, "Se ha registrado con éxito al Usuario");
-            main.cambiarDePantalla("usuario.fxml");
+            main.cambiarDePantalla("login.fxml", "Task Builder");
         }
     }
     

@@ -48,7 +48,7 @@ public class registerController implements Initializable {
     
     @FXML
     public void registrarseBtn() {
-        DataBase db = new DataBase("tareas", "root", "");
+        DataBase db = main.getDataBase();
         
         ArrayList<Integer> lista = db.getIndexOf("usuario", "CORREO", correo.getText().toUpperCase() );
         

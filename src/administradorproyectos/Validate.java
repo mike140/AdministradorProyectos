@@ -5,8 +5,6 @@ import javax.swing.JOptionPane;
 
 public class Validate {
     
-    private final static Scanner entrada = new Scanner( System.in );
-    
     public static boolean isName(String text, int length, String field){
         if( text.matches("") ){
             JOptionPane.showMessageDialog(null, "Error favor de ingresar un valo para "

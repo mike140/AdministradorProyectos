@@ -23,6 +23,41 @@ public class DataBase {
         }
     }
     
+    public int getCount(String table){
+        try{
+            Statement query = (Statement) connection.createStatement();
+            String comando = "SELECT COUNT(*) FROM " + table; 
+            ResultSet rs = query.executeQuery(comando);
+            
+            rs.first();
+            int number = Integer.valueOf( rs.getString(1) );
+            return number;
+        }catch(SQLException e){
+            return 0;
+        }
+    }
+    
+    public String[] getValuesInColumn(String table, String column){
+        ArrayList<String> lista = new ArrayList();
+        
+        try{
+            Statement query = (Statement) connection.createStatement();
+            String comando = "SELECT " + column + " FROM " + table; 
+            ResultSet rs = query.executeQuery(comando);
+            
+            rs.beforeFirst();
+            
+            while( rs.next() )
+                lista.add( rs.getString(1) );
+            String arreglo[] = new String[ lista.size() ];
+            
+            lista.toArray( arreglo );
+            return arreglo;
+        }catch(SQLException e){
+            return null;
+        }
+    }
+    
     public boolean insert(String tableName, String[] values){
         try {
             Statement query = (Statement) connection.createStatement();

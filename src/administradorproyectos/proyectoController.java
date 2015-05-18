@@ -7,7 +7,10 @@
 package administradorproyectos;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,22 +35,25 @@ public class proyectoController implements Initializable {
     @FXML
     private DatePicker fecha;
     
-    
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         main = AdministradorProyectos.getInstance();
+        fecha.setValue( LocalDate.now() );
     }
     
     @FXML
     public void abrirBtn() {
-        
+        if( JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea salir?") == 0 ){
+            System.out.println("Estoy a punto de entrar");
+            main.cambiarDePantalla("abrir_proyecto.fxml", "Abrir Proyecto");
+        }
+            
     }
     
     @FXML
     public void crearBtn() {
-        DataBase db = new DataBase("tareas", "root", "");
+        DataBase db = main.getDataBase();
         
         if( !Validate.isCorrectSize( titulo.getText() , 100, "Titulo") )
             return;

@@ -9,19 +9,19 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="administradorproyectos.dashboard_controller">
   <children>
       <MenuBar>
          <menus>
             <Menu mnemonicParsing="false" text="Archivo">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Proyecto" />
+                  <MenuItem mnemonicParsing="false" onAction="#proyecto" text="Proyecto" />
                   <MenuItem mnemonicParsing="false" text="Tareas" />
                   <MenuItem mnemonicParsing="false" text="Usuarios" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Configuración" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Salir" />
+                  <MenuItem mnemonicParsing="false" onAction="#salir" text="Salir" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Ayuda">

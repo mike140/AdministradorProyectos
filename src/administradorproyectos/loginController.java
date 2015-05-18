@@ -59,7 +59,7 @@ public class loginController implements Initializable {
         if( !Validate.isMail(correo_electronico.getText(), 100) || !Validate.isPass(password.getText(), 30) )
             return;
         
-        DataBase db = new DataBase("tareas", "root", "");
+        DataBase db = main.getDataBase();
         
         ArrayList<Integer> lista = db.getIndexOf("usuario", "CORREO", correo_electronico.getText().toUpperCase() );
         if( lista.isEmpty() ){
@@ -72,6 +72,7 @@ public class loginController implements Initializable {
         
         if( pass.matches( password.getText() ) ){
             JOptionPane.showMessageDialog(null, "Bienvenido " + name + "!");
+            //JOptionPane.showMessageDialog(null, db.getValuesInColumn("usuario", "NOMBRE").length );
             AdministradorProyectos.getInstance().cambiarDePantalla("dashboard.fxml", "Proyecto");
         }
         else{

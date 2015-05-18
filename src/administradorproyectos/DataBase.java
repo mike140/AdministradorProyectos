@@ -23,6 +23,7 @@ public class DataBase {
         }
     }
     
+    //Retorna el número de registros que hay en una tabla, si ocurre un error retorna -1
     public int getCount(String table){
         try{
             Statement query = (Statement) connection.createStatement();
@@ -33,10 +34,11 @@ public class DataBase {
             int number = Integer.valueOf( rs.getString(1) );
             return number;
         }catch(SQLException e){
-            return 0;
+            return -1;
         }
     }
     
+    //Retorna un arreglo de String con todos los valores que tiene la columna de una tabla
     public String[] getValuesInColumn(String table, String column){
         ArrayList<String> lista = new ArrayList();
         
@@ -58,6 +60,8 @@ public class DataBase {
         }
     }
     
+    //Inserta los valores de un registro en una tabla. En los valores se omite el id
+    //Retorna un boleano indicando si se pudo realizar la inserción
     public boolean insert(String tableName, String[] values){
         try {
             Statement query = (Statement) connection.createStatement();
@@ -80,10 +84,12 @@ public class DataBase {
         return true;
     }
     
+    //Retorna verdadero si la base de datos está conectada
     public boolean isConnected(){
         return exito;
     }
     
+    //Executa un comando sql y devuelve verdadero si se pudo realizar con exito
     public boolean executeQuery(String command){
         try {
             Statement query = (Statement) connection.createStatement();
@@ -95,6 +101,7 @@ public class DataBase {
         }
     }
     
+    //Devuelve un arreglo asociativo con el registro de posición "index" de una tabla
     public HashMap<String, String>fetchArray(String table, int index){
         HashMap<String, String> mapa = new HashMap();
         
@@ -121,14 +128,18 @@ public class DataBase {
         }
     }
     
+    //Retorna la conexión de la base de datos
     public Connection getConnection(){
         return connection;
     }
     
+    //Cierra la conexión de la base de datos
     public void close() throws SQLException{
         connection.close();
     }
     
+    //Retorna una lista con todos los ids de los registros de una tabla que tengan un determinado valor
+    //en una columna especifica. Si no existe ningún registro con ese valor retorna null
     public ArrayList<Integer> getIndexOf(String tableName, String columnName, String value){
         try{
             ArrayList<Integer>lista = new ArrayList();
@@ -145,6 +156,7 @@ public class DataBase {
         }
     }
     
+    //Obtener el valor de una columna, en un registro de posición "index" de una determinada tabla
     public String getValueOf(String tableName, String columnName, int index){
         try{
             Statement query = (Statement) connection.createStatement();
@@ -158,6 +170,7 @@ public class DataBase {
         }     
     }
     
+    //Obtener un arreglo con los nombres de todas las columnas de una tabla
     public String[] getColumnsOf(String tableName){
         try{
             Statement query = (Statement) connection.createStatement();
@@ -179,6 +192,7 @@ public class DataBase {
         }
     }
     
+    //Elimina un indice en una tabla, retorna verdadero si se pudo eliminar con exito
     public boolean removeIndex(String tableName, int index){
         try{
             Statement query = (Statement) connection.createStatement();

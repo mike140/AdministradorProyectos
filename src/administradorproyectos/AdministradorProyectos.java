@@ -11,6 +11,8 @@ public class AdministradorProyectos extends Application {
     
     private Stage mainStage;
     
+    private int id_proyecto;
+    
     private static AdministradorProyectos instance;
     
     public static AdministradorProyectos getInstance() {
@@ -109,6 +111,9 @@ public class AdministradorProyectos extends Application {
         return true;
     }
     
+    public void setIdProyecto(int n){
+        id_proyecto = n;
+    }
     
     //Esta es la clase principal de el programa donde se maneja todo entonces aqui declaras tu funcion para cambiar de pantalla o conectar a BD o lo que sea
     public void cambiarDePantalla(String screen, String title) {

@@ -50,6 +50,9 @@ public class abrirProyectoController implements Initializable {
     
     public void abreProyecto(){
         String nombre = proyectos.getSelectionModel().getSelectedItem().toString();
+        DataBase db = main.getDataBase();
+        ArrayList<Integer> lista = db.getIndexOf("proyecto", "TITULO", nombre);
+        main.setIdProyecto( lista.get(0) );
         main.cambiarDePantalla("dashboard.fxml", nombre);
     }
     

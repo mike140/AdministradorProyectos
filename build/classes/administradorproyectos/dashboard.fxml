@@ -81,8 +81,8 @@
                             <AnchorPane />
                           </content>
                         </ScrollPane>
-                        <TextArea layoutX="11.0" layoutY="199.0" prefHeight="51.0" prefWidth="200.0" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" />
-                        <Button layoutX="159.0" layoutY="250.0" mnemonicParsing="false" text="Enviar" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="11.0" />
+                        <TextArea fx:id="mensaje" layoutX="11.0" layoutY="199.0" prefHeight="51.0" prefWidth="200.0" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" />
+                        <Button fx:id="enviar_mensaje" layoutX="159.0" layoutY="250.0" mnemonicParsing="false" text="Enviar" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="11.0" />
                      </children>
                   </AnchorPane>
               </items>

@@ -48,7 +48,7 @@ public class dashboard_controller implements Initializable {
     }
     
     @FXML
-    public void mensaje(){
-        main.cambiarDePantalla("", null);
+    public void enviarMensaje(){
+        
     }
 }

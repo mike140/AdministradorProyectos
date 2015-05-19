@@ -103,6 +103,17 @@ public class dashboard_controller implements Initializable {
     }
     
     @FXML
+    public void tarea(){
+        if( JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir del proyecto actual?") == 0 )
+            main.cambiarDePantalla("tarea.fxml", "Nueva Tarea");
+    }
+    
+    public void usuario(){
+        if( JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir del proyecto actual?") == 0 )
+            main.cambiarDePantalla("tarea_usuario.fxml", "Asignar Usuario");
+    }
+    
+    @FXML
     public void enviarMensaje() {  
         DataBase db = main.getDataBase();
         Connection connection = db.getConnection();

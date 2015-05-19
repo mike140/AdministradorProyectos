@@ -7,7 +7,13 @@
 package administradorproyectos;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -45,7 +51,7 @@ public class dashboard_controller implements Initializable {
     @FXML
     private String proyecto_id;
     @FXML
-    private ScrollPane lista_mensajes;
+    private TextArea lista_mensajes;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -96,9 +102,36 @@ public class dashboard_controller implements Initializable {
     }
     
     @FXML
-    public void enviarMensaje(){
+    public void enviarMensaje(){  
+        DataBase db = main.getDataBase();
+        Connection connection = db.getConnection();
+        String id_proyecto = main.getProyecto_id();
         
-    }
+        HashMap<String, String> proyecto = db.fetchArray("proyecto", Integer.valueOf(id_proyecto) );     
+        String values[] = { proyecto_id, main.getUsuario_id(), mensaje.getText(), LocalDate.now().toString() };
+        db.insert("mensaje", values);
+        
+        String mensajeTotal = "";
+            
+            try{
+                Statement query = (Statement) connection.createStatement();
+                String comando = "SELECT `usuario`.`NOMBRE`, `mensaje`.`MENSAJE`, `mensaje`.`FECHA`  FROM `mensaje`, `usuario` WHERE `PROYECTO_ID` = " + id_proyecto + " AND `usuario`.`ID` = `mensaje`.`USUARIO_ID`";
+                ResultSet rs = query.executeQuery(comando);
+                rs.beforeFirst();
+                
+                while( rs.next() ){
+                    for(int j = 1; j <= 3; j++)
+                        mensajeTotal += rs.getString(j) + "\n";
+                }
+                mensajeTotal += "\n\n";
+
+            }catch(SQLException e){
+                System.out.println("No puedo");
+            }
+            lista_mensajes.setText(mensajeTotal);
+        }
+        
+
     
     public class JavaApp {
         

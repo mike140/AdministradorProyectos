@@ -68,7 +68,7 @@
                   <Font name="Garamond Bold" size="20.0" />
                </font>
             </Label>
-            <Rectangle fx:id="fecha_fin" arcHeight="5.0" arcWidth="5.0" fill="#cceaeb" height="292.0" layoutX="338.0" layoutY="62.0" stroke="#cceaeb" strokeType="INSIDE" width="284.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cceaeb" height="292.0" layoutX="338.0" layoutY="62.0" stroke="#cceaeb" strokeType="INSIDE" width="284.0" />
             <TextArea fx:id="descripcion" layoutX="38.0" layoutY="166.0" prefHeight="121.0" prefWidth="249.0" />
             <Label layoutX="365.0" layoutY="82.0" text="Fecha de inicio:">
                <font>
@@ -81,7 +81,7 @@
                   <Font name="Century Schoolbook Bold" size="14.0" />
                </font>
             </Label>
-            <DatePicker layoutX="365.0" layoutY="170.0" />
+            <DatePicker fx:id="fecha_fin" layoutX="365.0" layoutY="170.0" />
             <Button fx:id="agregar" layoutX="534.0" layoutY="314.0" mnemonicParsing="false" text="Agregar" />
             <Label layoutX="365.0" layoutY="217.0" text="Añadir a proyecto">
                <font>

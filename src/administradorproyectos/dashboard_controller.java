@@ -8,6 +8,8 @@ package administradorproyectos;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -17,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebView;
@@ -29,7 +32,7 @@ import netscape.javascript.JSObject;
  */
 public class dashboard_controller implements Initializable {
     
-    final String COLOR_USUARIO = "#4bc0fd", COLOR_OTRO = "#4bfd79", COLOR_COMPARTIDO = "#4bfdd5";
+    final String COLOR = "#4bc0fd";
     
     private AdministradorProyectos main;
     
@@ -41,6 +44,8 @@ public class dashboard_controller implements Initializable {
     private WebView calendario;
     @FXML
     private String proyecto_id;
+    @FXML
+    private ScrollPane lista_mensajes;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -56,9 +61,17 @@ public class dashboard_controller implements Initializable {
                     if (newState == State.SUCCEEDED) {
                             JSObject win = (JSObject) calendario.getEngine().executeScript("window");
                             win.setMember("app", new JavaApp());
-                            scriptAgregarEvento("1", "Un evento del usuario", "2015-05-07", "2015-05-07", COLOR_USUARIO);
-                            scriptAgregarEvento("2", "Un evento de otro", "2015-05-07", "2015-05-07", COLOR_OTRO);
-                            scriptAgregarEvento("3", "Un evento compartido", "2015-05-07", "2015-05-07", COLOR_COMPARTIDO);
+                            Iterator<Map.Entry<String, Tarea>> iterator = main.getTareas().entrySet().iterator() ;
+                            while(iterator.hasNext()){
+                                Map.Entry<String, Tarea> tarea = iterator.next();
+                                scriptAgregarEvento(
+                                    tarea.getKey(), 
+                                    tarea.getValue().getTitulo(), 
+                                    tarea.getValue().getFecha_inicio().split("/")[2] + "-" + tarea.getValue().getFecha_inicio().split("/")[1] + "-" + tarea.getValue().getFecha_inicio().split("/")[0],
+                                    tarea.getValue().getFecha_fin().split("/")[2] + "-" + tarea.getValue().getFecha_fin().split("/")[1] + "-" + tarea.getValue().getFecha_fin().split("/")[0],
+                                    COLOR
+                                );
+                            }
                         }
                     }
                 }
@@ -90,7 +103,7 @@ public class dashboard_controller implements Initializable {
     public class JavaApp {
         
         public void evento(String evento) {
-            System.out.println(evento);
+            JOptionPane.showMessageDialog(null, "Descripcion:\n " + main.getTareas().get(evento).getDescripcion() + "!");
         }
     }
     

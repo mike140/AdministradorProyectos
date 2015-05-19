@@ -147,8 +147,8 @@ public class AdministradorProyectos extends Application {
         // en esa parte eliges el controlador y los controladores utiliza el template que ya esta o mas facil solo copias un controlador y lo pegas asi:
     }
     
-    public ArrayList<Tarea> getTareasUsuario() {
-        ArrayList<Tarea> tareas = new ArrayList();
+    public HashMap<String, Tarea> getTareasUsuario() {
+        HashMap<String, Tarea>  tareas = new HashMap();
         
         String tareas_id[] = database.getValuesInColumn("`tarea`, `tarea_usuario` ", 
                 "`tarea`.`ID`", "WHERE `tarea`.`PROYECTO_ID` = " + proyecto_id + 
@@ -170,15 +170,13 @@ public class AdministradorProyectos extends Application {
                 temp.setEstado(false);
             else
                 temp.setEstado(true);
-            tareas.add(temp);
-            System.out.println(registro);
+            tareas.put(x, temp);
         }
-
         return tareas;
     }
     
-    public ArrayList<Tarea> getTareas() {
-        ArrayList<Tarea> tareas = new ArrayList();
+    public HashMap<String, Tarea> getTareas() {
+        HashMap<String, Tarea> tareas = new HashMap();
         
         String tareas_id[] = database.getValuesInColumn("`tarea`, `tarea_usuario` ", 
                 "`tarea`.`ID`", "WHERE `tarea`.`PROYECTO_ID` = " + proyecto_id + 
@@ -200,8 +198,8 @@ public class AdministradorProyectos extends Application {
                 temp.setEstado(false);
             else
                 temp.setEstado(true);
-            tareas.add(temp);
-            System.out.println(registro);
+            
+            tareas.put( x , temp);
         }
 
         return tareas;

@@ -21,13 +21,21 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javax.swing.JOptionPane;
 import netscape.javascript.JSObject;
@@ -52,6 +60,8 @@ public class dashboard_controller implements Initializable {
     private String proyecto_id;
     @FXML
     private TextArea lista_mensajes;
+    @FXML
+    private Accordion tareas;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -83,6 +93,48 @@ public class dashboard_controller implements Initializable {
                 }
         );
         cargarMensajes();
+        Iterator<Map.Entry<String, Tarea>> iterator = main.getTareasUsuario().entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry<String, Tarea> tarea = iterator.next();
+            final String id = tarea.getKey();
+            VBox box = new VBox(5);
+            final CheckBox estado = new CheckBox("¿Completada?");
+            Button eliminar = new Button("Eliminar");
+            if(tarea.getValue().isEstado()) {
+                estado.setSelected(true);
+            } else {
+                estado.setSelected(false);
+            }
+            estado.setOnAction(new EventHandler<ActionEvent>(){
+
+                @Override
+                public void handle(ActionEvent event) {
+                    if(estado.isSelected()){
+                        //Actualizar a completada
+                    } else {
+                        //Actualizar a no completada
+                    }
+                    System.out.println(id);
+                }
+                
+            });
+            eliminar.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    System.out.println(id);
+                    //Borrar la tarea
+                }
+                
+            });
+            Text descripcion = new Text(tarea.getValue().getDescripcion());
+            descripcion.setWrappingWidth(200);
+            box.getChildren().add(descripcion);
+            box.getChildren().add(estado);
+            box.getChildren().add(eliminar);
+            TitledPane t = new TitledPane(tarea.getValue().getTitulo(), box);
+            tareas.getPanes().add(t);
+        }
         
         
     }

@@ -60,6 +60,28 @@ public class DataBase {
         }
     }
     
+    //Retorna un arreglo de String con todos los valores que tiene la columna de una tabla
+    public String[] getValuesInColumn(String table, String column, String extra){
+        ArrayList<String> lista = new ArrayList();
+        
+        try{
+            Statement query = (Statement) connection.createStatement();
+            String comando = "SELECT " + column + " FROM " + table + extra; 
+            ResultSet rs = query.executeQuery(comando);
+            
+            rs.beforeFirst();
+            
+            while( rs.next() )
+                lista.add( rs.getString(1) );
+            String arreglo[] = new String[ lista.size() ];
+            
+            lista.toArray( arreglo );
+            return arreglo;
+        }catch(SQLException e){
+            return null;
+        }
+    }
+    
     //Inserta los valores de un registro en una tabla. En los valores se omite el id
     //Retorna un boleano indicando si se pudo realizar la inserción
     public boolean insert(String tableName, String[] values){

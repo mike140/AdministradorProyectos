@@ -32,11 +32,9 @@ public class abrirProyectoController implements Initializable {
         main = AdministradorProyectos.getInstance();
         
         DataBase db = main.getDataBase();
-        
-        String nombres[] = db.getValuesInColumn("proyecto", "TITULO");
-        String fechas[] = db.getValuesInColumn("proyecto", "FECHA");
-        
-        System.out.println("Holi");
+        System.out.println(main.getUsuario_id());
+        String nombres[] = db.getValuesInColumn("`proyecto`, `proyecto_usuario`", "TITULO", "WHERE `proyecto`.`ID` = `proyecto_usuario`.`PROYECTO_ID` AND `proyecto_usuario`.`USUARIO_ID` = " + main.getUsuario_id());
+        String fechas[] = db.getValuesInColumn("`proyecto`, `proyecto_usuario`", "FECHA", "WHERE `proyecto`.`ID` = `proyecto_usuario`.`PROYECTO_ID` AND `proyecto_usuario`.`USUARIO_ID` = " + main.getUsuario_id());
         
         ArrayList<String>lista = new ArrayList();
         proyectos.setValue( "Eliga el proyecto" );
@@ -51,8 +49,8 @@ public class abrirProyectoController implements Initializable {
     public void abreProyecto(){
         String nombre = proyectos.getSelectionModel().getSelectedItem().toString();
         DataBase db = main.getDataBase();
-        ArrayList<Integer> lista = db.getIndexOf("proyecto", "TITULO", nombre);
-        main.setIdProyecto( lista.get(0) );
+        //ArrayList<Integer> lista = db.getIndexOf("proyecto", "TITULO", nombre);
+        //main.setProyecto_id( db.getValueOf("proyecto", "ID", lista.get(0)) );
         main.cambiarDePantalla("dashboard.fxml", nombre);
     }
     

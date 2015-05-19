@@ -1,17 +1,35 @@
 package administradorproyectos;
 
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 public class AdministradorProyectos extends Application {
     
     private Stage mainStage;
     
-    private int id_proyecto;
+    private String proyecto_id;
+    private String usuario_id;
+
+    public String getProyecto_id() {
+        return proyecto_id;
+    }
+
+    public void setProyecto_id(String proyecto_id) {
+        this.proyecto_id = proyecto_id;
+    }
+
+    public void setUsuario_id(String usuario_id) {
+        this.usuario_id = usuario_id;
+    }
+
+    public String getUsuario_id() {
+        return usuario_id;
+    }
     
     private static AdministradorProyectos instance;
     
@@ -111,10 +129,6 @@ public class AdministradorProyectos extends Application {
         return true;
     }
     
-    public void setIdProyecto(int n){
-        id_proyecto = n;
-    }
-    
     //Esta es la clase principal de el programa donde se maneja todo entonces aqui declaras tu funcion para cambiar de pantalla o conectar a BD o lo que sea
     public void cambiarDePantalla(String screen, String title) {
         try {
@@ -131,8 +145,21 @@ public class AdministradorProyectos extends Application {
         //ok? okay y para los fxml nuevos tienes que asignarles un controlador de esta forma
         // en esa parte eliges el controlador y los controladores utiliza el template que ya esta o mas facil solo copias un controlador y lo pegas asi:
     }
+    
+    public ArrayList<Tarea> getTareasUsuario() {
+        ArrayList<Tarea> tareas = new ArrayList<Tarea>();
+        /*
+        SELECT `tarea`.* 
+        FROM `tarea`, `tarea_usuario` 
+        WHERE `tarea`.`PROYECTO_ID` = ? 
+        AND `tarea`.`ID` = `tarea_usuario`.`TAREA_ID` 
+        AND `tarea_usuario`.`USUARIO_ID` = ?
+        */
+        return tareas;
+    }
+    
 }
 
-
-
-//Si? a ok sip ya te entendi oye entonces ahorita hago nuevousuario y login? o pongo otros formularios? haz el de nuevo usuario y login, :) okay ;) ahorita vengo que paso=? a no que ahorita te los paso jajaok
+class Tarea {
+    
+}

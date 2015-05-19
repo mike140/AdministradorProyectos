@@ -73,7 +73,9 @@ public class loginController implements Initializable {
         if( pass.matches( password.getText() ) ){
             JOptionPane.showMessageDialog(null, "Bienvenido " + name + "!");
             //JOptionPane.showMessageDialog(null, db.getValuesInColumn("usuario", "NOMBRE").length );
-            AdministradorProyectos.getInstance().cambiarDePantalla("dashboard.fxml", "Proyecto");
+            main.setUsuario_id(db.getValueOf("usuario", "ID", lista.get(0) ));
+            AdministradorProyectos.getInstance().cambiarDePantalla("abrir_proyecto.fxml", "Proyecto");
+            
         }
         else{
             JOptionPane.showMessageDialog(null, "La contraseña no es correcta");

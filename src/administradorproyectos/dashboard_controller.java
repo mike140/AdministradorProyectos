@@ -37,11 +37,15 @@ public class dashboard_controller implements Initializable {
     private Button enviar_mensaje;
     @FXML
     private WebView calendario;
+    @FXML
+    private String proyecto_id;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         main = AdministradorProyectos.getInstance();
+        proyecto_id = main.getProyecto_id();
+        /*
         calendario.getEngine().load(this.getClass().getResource("scheduler/index.html").toExternalForm());
         calendario.getEngine().getLoadWorker().stateProperty().addListener(
             new ChangeListener<State>() {
@@ -55,6 +59,8 @@ public class dashboard_controller implements Initializable {
                     }
                 }
         );
+        */
+        
     }
     
     @FXML

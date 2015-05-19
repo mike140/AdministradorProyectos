@@ -82,6 +82,7 @@ public class dashboard_controller implements Initializable {
                     }
                 }
         );
+        cargarMensajes();
         
         
     }
@@ -102,7 +103,7 @@ public class dashboard_controller implements Initializable {
     }
     
     @FXML
-    public void enviarMensaje(){  
+    public void enviarMensaje() {  
         DataBase db = main.getDataBase();
         Connection connection = db.getConnection();
         String id_proyecto = main.getProyecto_id();
@@ -110,26 +111,50 @@ public class dashboard_controller implements Initializable {
         HashMap<String, String> proyecto = db.fetchArray("proyecto", Integer.valueOf(id_proyecto) );     
         String values[] = { proyecto_id, main.getUsuario_id(), mensaje.getText(), LocalDate.now().toString() };
         db.insert("mensaje", values);
+        mensaje.setText("");
         
         String mensajeTotal = "";
             
-            try{
-                Statement query = (Statement) connection.createStatement();
-                String comando = "SELECT `usuario`.`NOMBRE`, `mensaje`.`MENSAJE`, `mensaje`.`FECHA`  FROM `mensaje`, `usuario` WHERE `PROYECTO_ID` = " + id_proyecto + " AND `usuario`.`ID` = `mensaje`.`USUARIO_ID`";
-                ResultSet rs = query.executeQuery(comando);
-                rs.beforeFirst();
-                
-                while( rs.next() ){
-                    for(int j = 1; j <= 3; j++)
-                        mensajeTotal += rs.getString(j) + "\n";
-                }
-                mensajeTotal += "\n\n";
+        try{
+            Statement query = (Statement) connection.createStatement();
+            String comando = "SELECT `usuario`.`NOMBRE`, `mensaje`.`FECHA`, `mensaje`.`MENSAJE`  FROM `mensaje`, `usuario` WHERE `PROYECTO_ID` = " + id_proyecto + " AND `usuario`.`ID` = `mensaje`.`USUARIO_ID` ORDER BY `mensaje`.`ID` DESC";
+            ResultSet rs = query.executeQuery(comando);
+            rs.beforeFirst();
 
-            }catch(SQLException e){
-                System.out.println("No puedo");
+            while( rs.next() ){
+                mensajeTotal += rs.getString(1) + " -- " + rs.getString(2);
+                mensajeTotal += "\n" + rs.getString(3) + "\n\n";
             }
-            lista_mensajes.setText(mensajeTotal);
+
+        }catch(SQLException e){
+            System.out.println("No puedo");
         }
+        lista_mensajes.setText(mensajeTotal);
+    }
+    
+    public void cargarMensajes() {  
+        DataBase db = main.getDataBase();
+        Connection connection = db.getConnection();
+        String id_proyecto = main.getProyecto_id();
+        
+        String mensajeTotal = "";
+            
+        try{
+            Statement query = (Statement) connection.createStatement();
+            String comando = "SELECT `usuario`.`NOMBRE`, `mensaje`.`FECHA`, `mensaje`.`MENSAJE`  FROM `mensaje`, `usuario` WHERE `PROYECTO_ID` = " + id_proyecto + " AND `usuario`.`ID` = `mensaje`.`USUARIO_ID`ORDER BY `mensaje`.`ID` DESC";
+            ResultSet rs = query.executeQuery(comando);
+            rs.beforeFirst();
+
+            while( rs.next() ){
+                mensajeTotal += rs.getString(1) + " -- " + rs.getString(2);
+                mensajeTotal += "\n" + rs.getString(3) + "\n\n";
+            }
+
+        }catch(SQLException e){
+            System.out.println("No puedo");
+        }
+        lista_mensajes.setText(mensajeTotal);
+    }
         
 
     

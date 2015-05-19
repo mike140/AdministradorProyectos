@@ -187,20 +187,6 @@ class Tarea{
     public Tarea(){
         
     }
-    
-    public Tarea(String id, String titulo, String des, String fecha_in, String fecha_fin, String proyecto_id, String estado){
-        this.id = Integer.valueOf(id);
-        this.titulo = titulo;
-        this.descripcion = des;
-        this.fecha_inicio = fecha_in;
-        this.fecha_fin = fecha_fin;
-        this.proyecto_id = Integer.valueOf(proyecto_id);
-        
-        if( estado.matches("0") )
-            this.estado = false;
-        else
-            this.estado = true;
-    }
 
     public int getId() {
         return id;

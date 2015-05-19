@@ -68,7 +68,7 @@ public class tarea_usuarioController implements Initializable {
         ArrayList<Integer> user_id = db.getIndexOf("usuario", "NOMBRE", user);
         ArrayList<Integer> task_id = db.getIndexOf("tarea", "TITULO", task);
         
-        String arreglo[] = { String.valueOf(user_id) , String.valueOf(task_id)};
+        String arreglo[] = { String.valueOf(user_id.get(0)) , String.valueOf(task_id.get(0))};
         
         db.insert("tarea_usuario", arreglo );
         JOptionPane.showMessageDialog(null, "Se ha asignado la tarea al usuario");

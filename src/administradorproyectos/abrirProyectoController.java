@@ -49,9 +49,14 @@ public class abrirProyectoController implements Initializable {
     @FXML
     public void abreProyecto(){
         String nombre = proyectos.getSelectionModel().getSelectedItem().toString();
+        int index = nombre.indexOf(" -- ");
+        
+        String titulo = nombre.substring(0, index);
+        
         DataBase db = main.getDataBase();
-        //ArrayList<Integer> lista = db.getIndexOf("proyecto", "TITULO", nombre);
-        //main.setProyecto_id( db.getValueOf("proyecto", "ID", lista.get(0)) );
+        ArrayList<Integer> lista = db.getIndexOf("proyecto", "TITULO", titulo);
+        //System.out.println("El id de ese proyecto es!!!:  " + lista.get(0) );
+        main.setProyecto_id( db.getValueOf("proyecto", "ID", lista.get(0)) );
         main.cambiarDePantalla("dashboard.fxml", nombre);
     }
     

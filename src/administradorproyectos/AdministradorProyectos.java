@@ -1,6 +1,7 @@
 package administradorproyectos;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -147,19 +148,114 @@ public class AdministradorProyectos extends Application {
     }
     
     public ArrayList<Tarea> getTareasUsuario() {
-        ArrayList<Tarea> tareas = new ArrayList<Tarea>();
-        /*
-        SELECT `tarea`.* 
-        FROM `tarea`, `tarea_usuario` 
-        WHERE `tarea`.`PROYECTO_ID` = ? 
-        AND `tarea`.`ID` = `tarea_usuario`.`TAREA_ID` 
-        AND `tarea_usuario`.`USUARIO_ID` = ?
-        */
+        ArrayList<Tarea> tareas = new ArrayList();
+        
+        String tareas_id[] = database.getValuesInColumn("`tarea`, `tarea_usuario` ", 
+                "`tarea`.`ID`", "WHERE `tarea`.`PROYECTO_ID` = " + proyecto_id + 
+                        " AND `tarea`.`ID` = `tarea_usuario`.`TAREA_ID` AND `tarea_usuario`.`USUARIO_ID` = " + usuario_id);
+        Tarea temp;
+        
+        for(String x : tareas_id){
+            
+            temp = new Tarea();
+            HashMap<String, String> registro = database.fetchArray("tarea", Integer.valueOf(x) );
+            
+            temp.setTitulo( registro.get("TITULO") );
+            temp.setDescripcion( registro.get("DESCRIPCION") );
+            temp.setFecha_inicio( registro.get("FECHA_INICIO") );
+            temp.setFecha_fin( registro.get("FECHA_FIN") );
+            temp.setProyecto_id( Integer.valueOf( registro.get("PROYECTO_ID") ) );
+            
+            if( registro.get("ESTADO").matches("0") )
+                temp.setEstado(false);
+            else
+                temp.setEstado(true);
+            tareas.add(temp);
+            System.out.println(registro);
+        }
+
         return tareas;
     }
     
 }
 
-class Tarea {
+class Tarea{
+    private int id, proyecto_id;
+    private String titulo, descripcion, fecha_inicio, fecha_fin;
+    private boolean estado;
+    
+    public Tarea(){
+        
+    }
+    
+    public Tarea(String id, String titulo, String des, String fecha_in, String fecha_fin, String proyecto_id, String estado){
+        this.id = Integer.valueOf(id);
+        this.titulo = titulo;
+        this.descripcion = des;
+        this.fecha_inicio = fecha_in;
+        this.fecha_fin = fecha_fin;
+        this.proyecto_id = Integer.valueOf(proyecto_id);
+        
+        if( estado.matches("0") )
+            this.estado = false;
+        else
+            this.estado = true;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getProyecto_id() {
+        return proyecto_id;
+    }
+
+    public void setProyecto_id(int proyecto_id) {
+        this.proyecto_id = proyecto_id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getFecha_inicio() {
+        return fecha_inicio;
+    }
+
+    public void setFecha_inicio(String fecha_inicio) {
+        this.fecha_inicio = fecha_inicio;
+    }
+
+    public String getFecha_fin() {
+        return fecha_fin;
+    }
+
+    public void setFecha_fin(String fecha_fin) {
+        this.fecha_fin = fecha_fin;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
     
 }

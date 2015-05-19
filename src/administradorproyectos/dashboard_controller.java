@@ -29,6 +29,8 @@ import netscape.javascript.JSObject;
  */
 public class dashboard_controller implements Initializable {
     
+    final String COLOR_USUARIO = "#4bc0fd", COLOR_OTRO = "#4bfd79", COLOR_COMPARTIDO = "#4bfdd5";
+    
     private AdministradorProyectos main;
     
     @FXML
@@ -54,12 +56,19 @@ public class dashboard_controller implements Initializable {
                     if (newState == State.SUCCEEDED) {
                             JSObject win = (JSObject) calendario.getEngine().executeScript("window");
                             win.setMember("app", new JavaApp());
+                            scriptAgregarEvento("1", "Un evento del usuario", "2015-05-07", "2015-05-07", COLOR_USUARIO);
+                            scriptAgregarEvento("2", "Un evento de otro", "2015-05-07", "2015-05-07", COLOR_OTRO);
+                            scriptAgregarEvento("3", "Un evento compartido", "2015-05-07", "2015-05-07", COLOR_COMPARTIDO);
                         }
                     }
                 }
         );
-        calendario.getEngine().executeScript("agregarEvento('Un evento', '2015-05-07', '2015-05-07');");
         
+        
+    }
+    
+    private void scriptAgregarEvento(String id, String evento, String fechaInicio, String fechaTermino, String color) {
+        calendario.getEngine().executeScript("agregarEvento('" + id + "', '" + evento + "', '" + fechaInicio + "', '" + fechaTermino + "', '" + color + "');");
     }
     
     @FXML

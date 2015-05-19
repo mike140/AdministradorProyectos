@@ -141,7 +141,7 @@ public class AdministradorProyectos extends Application {
             mainStage.centerOnScreen();
             
         } catch(Exception e) {
-            
+            e.printStackTrace();
         }
         //ok? okay y para los fxml nuevos tienes que asignarles un controlador de esta forma
         // en esa parte eliges el controlador y los controladores utiliza el template que ya esta o mas facil solo copias un controlador y lo pegas asi:

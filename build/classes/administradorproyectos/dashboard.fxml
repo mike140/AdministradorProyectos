@@ -17,8 +17,8 @@
             <Menu mnemonicParsing="false" text="Archivo">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#proyecto" text="Proyecto" />
-                  <MenuItem mnemonicParsing="false" text="Tareas" />
-                  <MenuItem mnemonicParsing="false" text="Usuarios" />
+                  <MenuItem mnemonicParsing="false" onAction="#tarea" text="Tareas" />
+                  <MenuItem mnemonicParsing="false" onAction="#usuario" text="Usuarios" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Configuración" />
                   <SeparatorMenuItem mnemonicParsing="false" />
@@ -46,25 +46,7 @@
                               <Color blue="0.624" green="0.624" red="0.624" fx:id="x211" />
                            </textFill>
                         </Label>
-                        <Accordion layoutX="8.0" layoutY="40.0" prefHeight="66.0" prefWidth="98.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="40.0">
-                          <panes>
-                            <TitledPane animated="false" text="Tarea 1">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                              </content>
-                            </TitledPane>
-                            <TitledPane animated="false" text="Tarea 2">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                              </content>
-                            </TitledPane>
-                            <TitledPane animated="false" text="Tarea 3">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                              </content>
-                            </TitledPane>
-                          </panes>
-                        </Accordion>
+                        <Accordion fx:id="tareas" layoutX="8.0" layoutY="40.0" prefHeight="231.0" prefWidth="206.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="40.0" />
                      </children>
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="329.0" prefWidth="441.0">

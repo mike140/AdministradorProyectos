@@ -46,6 +46,7 @@ public class abrirProyectoController implements Initializable {
         proyectos.setItems(options);
     }
     
+    @FXML
     public void abreProyecto(){
         String nombre = proyectos.getSelectionModel().getSelectedItem().toString();
         DataBase db = main.getDataBase();

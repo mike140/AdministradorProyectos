@@ -45,7 +45,6 @@ public class dashboard_controller implements Initializable {
         // TODO
         main = AdministradorProyectos.getInstance();
         proyecto_id = main.getProyecto_id();
-        /*
         calendario.getEngine().load(this.getClass().getResource("scheduler/index.html").toExternalForm());
         calendario.getEngine().getLoadWorker().stateProperty().addListener(
             new ChangeListener<State>() {
@@ -59,7 +58,7 @@ public class dashboard_controller implements Initializable {
                     }
                 }
         );
-        */
+        calendario.getEngine().executeScript("agregarEvento('Un evento', '2015-05-07', '2015-05-07');");
         
     }
     

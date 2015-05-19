@@ -53,7 +53,7 @@
                   <Font name="Century Schoolbook Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="asignar" layoutX="407.0" layoutY="319.0" mnemonicParsing="false" text="Asignar" />
+            <Button fx:id="asignar" layoutX="407.0" layoutY="319.0" mnemonicParsing="false" onAction="#asignar" text="Asignar" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" height="44.0" stroke="#004c99" strokeType="INSIDE" width="640.0">
                <fill>
                   <LinearGradient endX="0.990521327014218" endY="1.0" startX="0.990521327014218" startY="0.04739336492891">

@@ -12,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -38,14 +40,38 @@ public class tarea_usuarioController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         main = AdministradorProyectos.getInstance();
+        
+        DataBase db = main.getDataBase();
+        System.out.println(main.getUsuario_id());
+        String nombres[] = db.getValuesInColumn("`usuario`, `proyecto_usuario`", "NOMBRE", "WHERE `usuario`.`ID` = `proyecto_usuario`.`USUARIO_ID` AND `proyecto_usuario`.`PROYECTO_ID` = " + main.getProyecto_id() );
+        ArrayList<Integer> tareas = db.getIndexOf("tarea", "PROYECTO_ID", String.valueOf( main.getProyecto_id()) );
+        
+        ObservableList<String> options = FXCollections.observableArrayList( nombres );
+        usuario.setItems(options);
+        usuario.setValue("Escoja el usuario: ");
+        
+        ObservableList<Integer> options2 = FXCollections.observableArrayList( tareas );
+        tarea.setItems(options2);
+        tarea.setValue("Asignar a tarea: ");
     }
     
 
     
     @FXML
-    public void crearBtn() {
+    public void asignar() {
+        DataBase db = main.getDataBase();
+        
+        String user = usuario.getSelectionModel().getSelectedItem().toString();
+        String task = tarea.getSelectionModel().getSelectedItem().toString();
+        
+        ArrayList<Integer> user_id = db.getIndexOf("usuario", "NOMBRE", user);
+        ArrayList<Integer> task_id = db.getIndexOf("tarea", "TITULO", task);
+        
+        String arreglo[] = { String.valueOf(user_id) , String.valueOf(task_id)};
+        
+        db.insert("tarea_usuario", arreglo );
+        JOptionPane.showMessageDialog(null, "Se ha asignado la tarea al usuario");
     }
     
     @FXML

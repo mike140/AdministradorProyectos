@@ -177,6 +177,36 @@ public class AdministradorProyectos extends Application {
         return tareas;
     }
     
+    public ArrayList<Tarea> getTareas() {
+        ArrayList<Tarea> tareas = new ArrayList();
+        
+        String tareas_id[] = database.getValuesInColumn("`tarea`, `tarea_usuario` ", 
+                "`tarea`.`ID`", "WHERE `tarea`.`PROYECTO_ID` = " + proyecto_id + 
+                        " AND `tarea`.`ID` = `tarea_usuario`.`TAREA_ID`");
+        Tarea temp;
+        
+        for(String x : tareas_id){
+            
+            temp = new Tarea();
+            HashMap<String, String> registro = database.fetchArray("tarea", Integer.valueOf(x) );
+            
+            temp.setTitulo( registro.get("TITULO") );
+            temp.setDescripcion( registro.get("DESCRIPCION") );
+            temp.setFecha_inicio( registro.get("FECHA_INICIO") );
+            temp.setFecha_fin( registro.get("FECHA_FIN") );
+            temp.setProyecto_id( Integer.valueOf( registro.get("PROYECTO_ID") ) );
+            
+            if( registro.get("ESTADO").matches("0") )
+                temp.setEstado(false);
+            else
+                temp.setEstado(true);
+            tareas.add(temp);
+            System.out.println(registro);
+        }
+
+        return tareas;
+    }
+    
 }
 
 class Tarea{

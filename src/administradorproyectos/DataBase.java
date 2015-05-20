@@ -232,6 +232,10 @@ public class DataBase {
         return executeQuery("UPDATE tarea SET ESTADO = 1 WHERE ID = " + id);
     }
     
+    public boolean unfinaliceTask(int id){
+        return executeQuery("UPDATE tarea SET ESTADO = 0 WHERE ID = " + id);
+    }
+    
     public ResultSet select(String command){
         try{
             Statement query = (Statement) connection.createStatement();
@@ -242,19 +246,5 @@ public class DataBase {
             return null;
         }     
     }
-    
-    /*
-    ResultSet query = database.select("SELECT (*) FROM usuario");
-    
-    query.beforeFirst();  // situa el puntero antes del primer registro
-    
-    while( query.next() ){  //pasa al siguiente registro y retorna un boleano si existe 
-        
-        System.out.print( query.getString(1) ); //Obtiene un string de la primera columna
-        System.out.print( query.getString(2) ); //Obtiene un string de la segunda columna
-        System.out.print( query.getString(3) ); //Obtiene un string de la tercera columna
-    }
-    
-    */
     
 }

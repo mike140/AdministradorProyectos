@@ -18,6 +18,11 @@ public class AdministradorProyectos extends Application {
     private String proyecto_id;
     private String usuario_id;
     private Proyecto proyecto;
+    private boolean admin_proyecto;
+    
+    public boolean isAdminProyecto() {
+        return admin_proyecto;
+    }
 
     public Proyecto getProyecto() {
         return proyecto;
@@ -30,7 +35,14 @@ public class AdministradorProyectos extends Application {
     public void setProyecto_id(String proyecto_id) {
         this.proyecto_id = proyecto_id;
         this.proyecto = new Proyecto(proyecto_id);
-        
+        String level = database.getValuesInColumn("`proyecto_usuario`", 
+                "`proyecto_usuario`.`NIVEL`", " WHERE `proyecto_usuario`.`PROYECTO_ID` = " + proyecto_id + 
+                        " AND `proyecto_usuario`.`USUARIO_ID` = " + usuario_id)[0];
+        System.out.println(level);
+        if(level.equals("1"))
+            admin_proyecto = true;
+        else
+            admin_proyecto = false;
     }
 
     public void setUsuario_id(String usuario_id) {

@@ -56,6 +56,7 @@ import netscape.javascript.JSObject;
 public class dashboard_controller implements Initializable {
     
     final String COLOR = "#4bc0fd";
+    private String proyecto_id;
     
     private AdministradorProyectos main;
     
@@ -65,8 +66,7 @@ public class dashboard_controller implements Initializable {
     private Button enviar_mensaje;
     @FXML
     private WebView calendario;
-    @FXML
-    private String proyecto_id;
+    
     @FXML
     private TextArea lista_mensajes;
     @FXML
@@ -110,7 +110,7 @@ public class dashboard_controller implements Initializable {
             final String id = tarea.getKey();
             VBox box = new VBox(5);
             final CheckBox estado = new CheckBox("¿Completada?");
-            Button eliminar = new Button("Eliminar");
+            
             if(tarea.getValue().isEstado()) {
                 estado.setSelected(true);
             } else {
@@ -121,28 +121,33 @@ public class dashboard_controller implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     if(estado.isSelected()){
-                        //Actualizar a completada
+                        main.getDataBase().finalizeTask(Integer.parseInt(id));
                     } else {
-                        //Actualizar a no completada
+                        main.getDataBase().unfinaliceTask(Integer.parseInt(id));
                     }
-                    System.out.println(id);
+                    main.cambiarDePantalla("dashboard.fxml", main.getProyecto().getTitulo());
                 }
                 
             });
-            eliminar.setOnAction(new EventHandler<ActionEvent>() {
-
-                @Override
-                public void handle(ActionEvent event) {
-                    System.out.println(id);
-                    //Borrar la tarea
-                }
-                
-            });
+            
+            
             Text descripcion = new Text(tarea.getValue().getDescripcion());
             descripcion.setWrappingWidth(200);
             box.getChildren().add(descripcion);
             box.getChildren().add(estado);
-            box.getChildren().add(eliminar);
+            if(main.isAdminProyecto()) {
+                Button eliminar = new Button("Eliminar");
+                eliminar.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent event) {
+                        main.getDataBase().removeIndex("`tarea`", Integer.parseInt(id));
+                        main.cambiarDePantalla("dashboard.fxml", main.getProyecto().getTitulo());
+                    }
+
+                });
+                box.getChildren().add(eliminar);
+            }          
             TitledPane t = new TitledPane(tarea.getValue().getTitulo(), box);
             tareas.getPanes().add(t);
         }
@@ -154,7 +159,7 @@ public class dashboard_controller implements Initializable {
     }
     
     protected BarChart<Number, String> crearGrafica() throws SQLException {
-        ResultSet query = main.getDataBase().select("SELECT COUNT(*) AS TOTAL, SUM(IF(`tarea`.`ESTADO` = 1, 1, 0)) AS COMPLEATADAS, `usuario`.`NOMBRE` FROM `tarea_usuario`, `usuario`, `tarea` WHERE `tarea_usuario`.`TAREA_ID` = `tarea`.`ID` AND `usuario`.`ID` = `tarea_usuario`.`USUARIO_ID` AND `tarea`.`PROYECTO_ID` = " + main.getProyecto_id());
+        ResultSet query = main.getDataBase().select("SELECT COUNT(*) AS TOTAL, SUM(IF(`tarea`.`ESTADO` = 1, 1, 0)) AS COMPLEATADAS, `usuario`.`NOMBRE` FROM `tarea_usuario`, `usuario`, `tarea` WHERE `tarea_usuario`.`TAREA_ID` = `tarea`.`ID` AND `usuario`.`ID` = `tarea_usuario`.`USUARIO_ID` AND `tarea`.`PROYECTO_ID` = " + main.getProyecto_id() + " GROUP BY  `usuario`.`NOMBRE`");
     
         query.beforeFirst();  
         ArrayList<String> nombres = new ArrayList<String>();
@@ -167,6 +172,7 @@ public class dashboard_controller implements Initializable {
             completadas.add(query.getString(2) ); 
         }
         final String[] nombresArray = new String[nombres.size()];
+        
         nombres.toArray(nombresArray);
         final CategoryAxis yAxis = new CategoryAxis();
         final NumberAxis xAxis = new NumberAxis();

@@ -60,6 +60,21 @@ public class tareaController implements Initializable {
         
         String values[] = {titulo.getText(), descripcion.getText(), fecha_inicio.getEditor().getText(), fecha_fin.getEditor().getText(), main.getProyecto_id(), "0" };
         
+        if(fecha_inicio.getValue().isAfter(main.getProyecto().getFecha())) {
+            JOptionPane.showMessageDialog(null, "Error la fecha de inicio no puede ser mayor a la fecha de termino del proyecto");
+            return;
+        }
+        
+        if(fecha_fin.getValue().isAfter(main.getProyecto().getFecha())) {
+            JOptionPane.showMessageDialog(null, "Error la fecha de fin no puede ser mayor a la fecha de termino del proyecto");
+            return;
+        }
+        
+        if(fecha_inicio.getValue().isAfter(fecha_fin.getValue())) {
+            JOptionPane.showMessageDialog(null, "Error la fecha de fin no puede ser menor a la fecha de inicio");
+            return;
+        }
+        
         if( !db.insert("tarea", values) ){
             JOptionPane.showMessageDialog(null, "Error ya existe una tarea con ese titulo");
             return;

@@ -1,5 +1,7 @@
 package administradorproyectos;
 
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.application.Application;
@@ -15,6 +17,11 @@ public class AdministradorProyectos extends Application {
     
     private String proyecto_id;
     private String usuario_id;
+    private Proyecto proyecto;
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
 
     public String getProyecto_id() {
         return proyecto_id;
@@ -22,6 +29,8 @@ public class AdministradorProyectos extends Application {
 
     public void setProyecto_id(String proyecto_id) {
         this.proyecto_id = proyecto_id;
+        this.proyecto = new Proyecto(proyecto_id);
+        
     }
 
     public void setUsuario_id(String usuario_id) {
@@ -207,7 +216,54 @@ public class AdministradorProyectos extends Application {
     
 }
 
-class Tarea{
+class Proyecto {
+    
+    private String id, titulo, descripcion;
+    private LocalDate fecha;
+
+    public Proyecto(String id) {
+        this.id = id;
+        HashMap<String, String> proyecto = AdministradorProyectos.getInstance().getDataBase().fetchArray("`proyecto` ", Integer.valueOf(id));
+        this.titulo = proyecto.get("TITULO");
+        this.descripcion = proyecto.get("DESCRIPCION");
+        this.fecha = LocalDate.of(Integer.parseInt(proyecto.get("FECHA").split("/")[2]), Integer.parseInt(proyecto.get("FECHA").split("/")[1]), Integer.parseInt(proyecto.get("FECHA").split("/")[0]));
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+    
+}
+
+class Tarea {
     private int id, proyecto_id;
     private String titulo, descripcion, fecha_inicio, fecha_fin;
     private boolean estado;

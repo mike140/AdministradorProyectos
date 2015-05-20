@@ -82,13 +82,7 @@
                </font>
             </Label>
             <DatePicker fx:id="fecha_fin" layoutX="365.0" layoutY="170.0" />
-            <Button fx:id="agregar" layoutX="534.0" layoutY="314.0" mnemonicParsing="false" text="Agregar" />
-            <Label layoutX="365.0" layoutY="217.0" text="Añadir a proyecto">
-               <font>
-                  <Font name="Century Schoolbook Bold" size="14.0" />
-               </font>
-            </Label>
-            <ComboBox fx:id="proyecto" layoutX="365.0" layoutY="243.0" prefHeight="22.0" prefWidth="238.0" />
+            <Button layoutX="534.0" layoutY="314.0" mnemonicParsing="false" onAction="#agregar" text="Agregar" />
             <TextField fx:id="titulo" layoutX="38.0" layoutY="107.0" prefHeight="25.0" prefWidth="249.0" />
       </children>
          <opaqueInsets>

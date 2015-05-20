@@ -29,7 +29,8 @@
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="375.0" prefWidth="262.0" VBox.vgrow="ALWAYS">
          <children>
             <ComboBox fx:id="proyectos" layoutX="44.0" layoutY="58.0" prefWidth="150.0" />
-            <Button layoutX="151.0" layoutY="126.0" mnemonicParsing="false" onAction="#abreProyecto" text="Abrir" />
+            <Button layoutX="119.0" layoutY="126.0" mnemonicParsing="false" onAction="#abreProyecto" text="Abrir" />
+            <Button layoutX="171.0" layoutY="126.0" mnemonicParsing="false" onAction="#crear" text="Crear" />
          </children>
     </AnchorPane>
   </children>

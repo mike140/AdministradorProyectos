@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,10 +38,6 @@ public class tareaController implements Initializable {
     private DatePicker fecha_inicio;
     @FXML
     private DatePicker fecha_fin;
-    @FXML
-    private ComboBox proyecto;
-    @FXML
-    private Button agregar;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -52,15 +49,39 @@ public class tareaController implements Initializable {
 
     
     @FXML
-    public void crearBtn() {
+    public void agregar() {
+        DataBase db = main.getDataBase();
+        
+        if( !Validate.isCorrectSize( titulo.getText() , 100, "Titulo") )
+            return;
+        
+        if( !Validate.isCorrectSize(descripcion.getText(), 300, "Descripcion") )
+            return;
+        
+        String values[] = {titulo.getText(), descripcion.getText(), fecha_inicio.getEditor().getText(), fecha_fin.getEditor().getText(), main.getProyecto_id(), "0" };
+        
+        if( !db.insert("tarea", values) ){
+            JOptionPane.showMessageDialog(null, "Error ya existe una tarea con ese titulo");
+            return;
+        }
+        
+        String tareas_id[] = db.getValuesInColumn("`tarea`", 
+                "`tarea`.`ID`", " WHERE `tarea`.`PROYECTO_ID` = '" + main.getProyecto_id() + 
+                        "' AND `tarea`.`TITULO` = '" + titulo.getText() + "'");        
+        
+        HashMap<String, String> registro = db.fetchArray("tarea", Integer.valueOf( tareas_id[0] ) );
+        String values_tarea_usuario[] = {main.getUsuario_id(), registro.get("ID") };
+        db.insert("tarea_usuario", values_tarea_usuario);
+        JOptionPane.showMessageDialog(null, "Tarea creado con exito");
+        main.cambiarDePantalla("dashboard.fxml", titulo.getText() );
     }
     
     @FXML
     public void salir(){
-        if( JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?") == 0 ){
+        
             String proyectName = main.getDataBase().getValueOf("proyecto", "TITULO", Integer.valueOf(main.getProyecto_id()) );
             main.cambiarDePantalla("dashboard.fxml", proyectName);
-        }
+        
             
     }
     

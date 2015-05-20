@@ -145,7 +145,6 @@ public class dashboard_controller implements Initializable {
     
     @FXML
     public void salir(){
-        if( JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir del proyecto actual?") == 0 )
             main.cambiarDePantalla("login.fxml", "Task Builder");
     }
     
@@ -224,7 +223,7 @@ public class dashboard_controller implements Initializable {
     public class JavaApp {
         
         public void evento(String evento) {
-            JOptionPane.showMessageDialog(null, "Descripcion:\n " + main.getTareas().get(evento).getDescripcion() + "!");
+            JOptionPane.showMessageDialog(null, "Descripcion:\n " + main.getTareas().get(evento).getDescripcion());
         }
     }
     

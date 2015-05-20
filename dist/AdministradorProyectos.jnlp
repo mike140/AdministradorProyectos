@@ -11,8 +11,8 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="AdministradorProyectos.jar" size="386320" download="eager" />
-    <jar href="lib/mysql-connector-java-5.0.8-bin.jar" size="560377" download="eager" />
+    <jar href="AdministradorProyectos.jar" size="371810" download="eager" />
+    <jar href="lib/mysql-connector-java-5.0.8-bin.jar" size="560361" download="eager" />
   </resources>
 <security>
   <all-permissions/>

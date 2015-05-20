@@ -60,4 +60,10 @@ public class abrirProyectoController implements Initializable {
         main.cambiarDePantalla("dashboard.fxml", nombre);
     }
     
+    @FXML
+    public void crear() {
+        main.cambiarDePantalla("proyecto.fxml", "Crear proyecto.");
+    }
+    
+    
 }

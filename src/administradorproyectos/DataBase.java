@@ -45,6 +45,7 @@ public class DataBase {
         try{
             Statement query = (Statement) connection.createStatement();
             String comando = "SELECT " + column + " FROM " + table; 
+            
             ResultSet rs = query.executeQuery(comando);
             
             rs.beforeFirst();
@@ -66,7 +67,7 @@ public class DataBase {
         
         try{
             Statement query = (Statement) connection.createStatement();
-            String comando = "SELECT " + column + " FROM " + table + extra; 
+            String comando = "SELECT " + column + " FROM " + table + extra;
             ResultSet rs = query.executeQuery(comando);
             
             rs.beforeFirst();

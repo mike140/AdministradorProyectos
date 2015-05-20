@@ -76,11 +76,12 @@ public class tarea_usuarioController implements Initializable {
     
     @FXML
     public void salir(){
-        if( JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?") == 0 ){
+        
             String proyectName = main.getDataBase().getValueOf("proyecto", "TITULO", Integer.valueOf(main.getProyecto_id()) );
             main.cambiarDePantalla("dashboard.fxml", proyectName);
-        }
             
     }
+    
+    
     
 }

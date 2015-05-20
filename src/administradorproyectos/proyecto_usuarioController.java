@@ -62,7 +62,7 @@ public class proyecto_usuarioController implements Initializable {
         usuarios_nombres = new ArrayList();
         
         try{
-            ResultSet query = db.select("SELECT `usuario`.`NOMBRE`, `usuario`.`ID` FROM `usuario`, (SELECT `usuario`.`ID` FROM `usuario` RIGHT JOIN `proyecto_usuario` ON `usuario`.`ID` = `proyecto_usuario`.`USUARIO_ID` WHERE `proyecto_usuario`.`PROYECTO_ID` = " + main.getProyecto_id() + ") AS registrados WHERE registrados.`ID` != `usuario`.`ID` GROUP BY `NOMBRE`");
+            ResultSet query = db.select("SELECT `todos`.`NOMBRE` FROM `usuario` AS `todos` LEFT JOIN (SELECT `usuario`.`ID` FROM `usuario` LEFT JOIN `proyecto_usuario` ON `usuario`.`ID` = `proyecto_usuario`.`USUARIO_ID` WHERE `proyecto_usuario`.`PROYECTO_ID` = " + main.getProyecto_id() + ") AS `registrados` ON `todos`.`ID` = `registrados`.`ID` WHERE `registrados`.`ID` IS NULL");
         
             query.beforeFirst();
 

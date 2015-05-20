@@ -10,11 +10,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.WindowEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -41,6 +43,15 @@ public class loginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {    
         main = AdministradorProyectos.getInstance();
+        main.getMainStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            
+            @Override
+            public void handle(WindowEvent ev) {
+                ev.consume();
+                salir();
+            }
+            
+        });
     } 
     
     @FXML
@@ -49,7 +60,7 @@ public class loginController implements Initializable {
     }
     
     @FXML
-    public void salir() throws Exception{
+    public void salir() {
         if( JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?") == 0 )
             System.exit(0);
     }

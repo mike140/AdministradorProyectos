@@ -16,18 +16,11 @@
          <menus>
             <Menu mnemonicParsing="false" text="Archivo">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#proyecto" text="Proyecto" />
-                  <MenuItem mnemonicParsing="false" onAction="#tarea" text="Tareas" />
-                  <MenuItem mnemonicParsing="false" onAction="#usuario" text="Usuarios" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Configuración" />
+                  <MenuItem fx:id="menuProyecto" mnemonicParsing="false" onAction="#proyecto" text="Proyecto" />
+                  <MenuItem fx:id="menuTarea" mnemonicParsing="false" onAction="#tarea" text="Tareas" />
+                  <MenuItem fx:id="menuUsuario" mnemonicParsing="false" onAction="#usuario" text="Usuarios" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#salir" text="Salir" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Ayuda">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Sobre..." />
                </items>
             </Menu>
          </menus>

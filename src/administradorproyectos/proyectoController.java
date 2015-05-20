@@ -13,12 +13,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.WindowEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -40,6 +42,16 @@ public class proyectoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         main = AdministradorProyectos.getInstance();
+        main.getMainStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            
+            @Override
+            public void handle(WindowEvent ev) {
+                System.out.println("LOL");
+                ev.consume();
+                salir();
+            }
+            
+        });
         fecha.setValue( LocalDate.now() );
     }
     
@@ -79,6 +91,12 @@ public class proyectoController implements Initializable {
         db.insert("proyecto_usuario", values_tarea_usuario);
         JOptionPane.showMessageDialog(null, "Proyecto creado con exito");
         main.cambiarDePantalla("dashboard.fxml", titulo.getText() );
+    }
+    
+    @FXML
+    public void salir(){
+        if( JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?") == 0 )
+            main.cambiarDePantalla("abrir_proyecto.fxml", "Abrir proyecto");
     }
     
 }

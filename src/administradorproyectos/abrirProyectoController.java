@@ -11,9 +11,12 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.stage.WindowEvent;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -30,6 +33,15 @@ public class abrirProyectoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         main = AdministradorProyectos.getInstance();
+        main.getMainStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            
+            @Override
+            public void handle(WindowEvent ev) {
+                ev.consume();
+                salir();
+            }
+            
+        });
         
         DataBase db = main.getDataBase();
         System.out.println(main.getUsuario_id());
@@ -65,5 +77,10 @@ public class abrirProyectoController implements Initializable {
         main.cambiarDePantalla("proyecto.fxml", "Crear proyecto.");
     }
     
+    @FXML
+    public void salir(){
+        if( JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?") == 0 )
+            main.cambiarDePantalla("login.fxml", "Task Builder");
+    }
     
 }

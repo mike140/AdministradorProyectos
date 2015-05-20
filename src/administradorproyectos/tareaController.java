@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -20,6 +21,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.WindowEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -43,6 +45,15 @@ public class tareaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         main = AdministradorProyectos.getInstance();
+        main.getMainStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            
+            @Override
+            public void handle(WindowEvent ev) {
+                ev.consume();
+                salir();
+            }
+            
+        });
         fecha_inicio.setValue( LocalDate.now() );
     }
     
@@ -93,11 +104,7 @@ public class tareaController implements Initializable {
     
     @FXML
     public void salir(){
-        
-            String proyectName = main.getDataBase().getValueOf("proyecto", "TITULO", Integer.valueOf(main.getProyecto_id()) );
-            main.cambiarDePantalla("dashboard.fxml", proyectName);
-        
-            
+        main.cambiarDePantalla("dashboard.fxml", main.getProyecto().getTitulo());            
     }
     
 }

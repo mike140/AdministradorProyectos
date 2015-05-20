@@ -38,6 +38,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -46,6 +47,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
+import javafx.stage.WindowEvent;
 import javax.swing.JOptionPane;
 import netscape.javascript.JSObject;
 
@@ -73,11 +75,31 @@ public class dashboard_controller implements Initializable {
     private Accordion tareas;
     @FXML
     private AnchorPane estadisticas;
+    @FXML
+    private MenuItem menuProyecto;
+    @FXML
+    private MenuItem menuUsuario;
+    @FXML
+    private MenuItem menuTarea;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         main = AdministradorProyectos.getInstance();
+        main.getMainStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            
+            @Override
+            public void handle(WindowEvent ev) {
+                ev.consume();
+                salir();
+            }
+            
+        });
+        if(!main.isAdminProyecto()) {
+            menuProyecto.setDisable(true);
+            menuUsuario.setDisable(true);
+            menuTarea.setDisable(true);
+        }
         proyecto_id = main.getProyecto_id();
         calendario.getEngine().load(this.getClass().getResource("scheduler/index.html").toExternalForm());
         calendario.getEngine().getLoadWorker().stateProperty().addListener(
@@ -204,6 +226,7 @@ public class dashboard_controller implements Initializable {
     
     @FXML
     public void salir(){
+        if( JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?") == 0 )
             main.cambiarDePantalla("login.fxml", "Task Builder");
     }
     

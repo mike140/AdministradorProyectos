@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -22,6 +23,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.WindowEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -43,6 +45,15 @@ public class proyecto_usuarioController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         main = AdministradorProyectos.getInstance();
+        main.getMainStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            
+            @Override
+            public void handle(WindowEvent ev) {
+                ev.consume();
+                salir();
+            }
+            
+        });
         db = main.getDataBase();
         usuarios_nombres = new ArrayList();
         

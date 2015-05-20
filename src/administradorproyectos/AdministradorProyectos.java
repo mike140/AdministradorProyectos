@@ -5,11 +5,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class AdministradorProyectos extends Application {
     
@@ -19,6 +22,10 @@ public class AdministradorProyectos extends Application {
     private String usuario_id;
     private Proyecto proyecto;
     private boolean admin_proyecto;
+
+    public Stage getMainStage() {
+        return mainStage;
+    }
     
     public boolean isAdminProyecto() {
         return admin_proyecto;
@@ -63,6 +70,7 @@ public class AdministradorProyectos extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+        Platform.setImplicitExit(false);
         instance = this;
         mainStage = stage;
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));

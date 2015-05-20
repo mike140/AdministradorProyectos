@@ -10,11 +10,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.WindowEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -38,6 +40,15 @@ public class registerController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         main = AdministradorProyectos.getInstance();
+        main.getMainStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            
+            @Override
+            public void handle(WindowEvent ev) {
+                ev.consume();
+                salir();
+            }
+            
+        });
     }
     
     @FXML

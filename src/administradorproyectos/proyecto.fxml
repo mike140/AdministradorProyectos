@@ -18,14 +18,7 @@
             <Menu mnemonicParsing="false" text="Archivo">
                <items>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Configuración" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Salir" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Ayuda">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Sobre..." />
                </items>
             </Menu>
          </menus>

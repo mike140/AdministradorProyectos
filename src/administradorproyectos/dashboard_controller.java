@@ -150,17 +150,15 @@ public class dashboard_controller implements Initializable {
     
     @FXML
     public void proyecto(){
-        main.entrarGUI();
+        main.cambiarDePantalla("proyecto_usuario.fxml", "Agregar usuarios al proyecto");
     }
     
     @FXML
     public void tarea(){
-        if( JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir del proyecto actual?") == 0 )
             main.cambiarDePantalla("tarea.fxml", "Nueva Tarea");
     }
     
     public void usuario(){
-        if( JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir del proyecto actual?") == 0 )
             main.cambiarDePantalla("tarea_usuario.fxml", "Asignar Usuario");
     }
     

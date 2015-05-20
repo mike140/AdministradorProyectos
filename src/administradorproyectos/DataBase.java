@@ -227,4 +227,8 @@ public class DataBase {
         } 
     }
     
+    public boolean finalizeTask(int id){
+        return executeQuery("UPDATE tarea SET ESTADO = 1 WHERE ID = " + id);
+    }
+    
 }

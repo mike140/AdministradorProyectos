@@ -221,6 +221,7 @@ public class DataBase {
             Statement query = (Statement) connection.createStatement();
             String comando = "DELETE FROM " + tableName + " WHERE ID = " + String.valueOf(index);
             query.executeUpdate(comando);
+            
             return true;
         }catch(SQLException e){
             return false;
@@ -230,5 +231,30 @@ public class DataBase {
     public boolean finalizeTask(int id){
         return executeQuery("UPDATE tarea SET ESTADO = 1 WHERE ID = " + id);
     }
+    
+    public ResultSet select(String command){
+        try{
+            Statement query = (Statement) connection.createStatement();
+            ResultSet rs = query.executeQuery(command);
+            
+            return rs;
+        }catch(SQLException e){
+            return null;
+        }     
+    }
+    
+    /*
+    ResultSet query = database.select("SELECT (*) FROM usuario");
+    
+    query.beforeFirst();  // situa el puntero antes del primer registro
+    
+    while( query.next() ){  //pasa al siguiente registro y retorna un boleano si existe 
+        
+        System.out.print( query.getString(1) ); //Obtiene un string de la primera columna
+        System.out.print( query.getString(2) ); //Obtiene un string de la segunda columna
+        System.out.print( query.getString(3) ); //Obtiene un string de la tercera columna
+    }
+    
+    */
     
 }

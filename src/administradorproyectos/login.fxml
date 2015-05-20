@@ -28,7 +28,7 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label layoutX="34.0" layoutY="79.0" text="Correo electrónico" />
+            <Label layoutX="34.0" layoutY="79.0" text="Nombre de Usuario" />
             <Label layoutX="72.0" layoutY="123.0" text="Contraseña" />
             <TextField fx:id="correo_electronico" layoutX="141.0" layoutY="75.0" />
             <PasswordField fx:id="password" layoutX="141.0" layoutY="119.0" />

@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -20,11 +21,16 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -34,6 +40,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
@@ -62,6 +69,8 @@ public class dashboard_controller implements Initializable {
     private TextArea lista_mensajes;
     @FXML
     private Accordion tareas;
+    @FXML
+    private AnchorPane estadisticas;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -135,8 +144,46 @@ public class dashboard_controller implements Initializable {
             TitledPane t = new TitledPane(tarea.getValue().getTitulo(), box);
             tareas.getPanes().add(t);
         }
-        
-        
+        estadisticas.getChildren().add(crearGrafica());
+    }
+    
+    protected BarChart<Number, String> crearGrafica() {
+        //SELECT COUNT(*) AS NUMERO, `usuario`.`NOMBRE` FROM `tarea_usuario`, `usuario`, `tarea` WHERE `tarea_usuario`.`TAREA_ID` = `tarea`.`ID` AND `usuario`.`ID` = `tarea_usuario`.`USUARIO_ID` AND `tarea`.`PROYECTO_ID` = 1
+        String tareas_t[] = main.getDataBase().getValuesInColumn("`tarea_usuario`, `usuario`, `tarea` ", 
+                "COUNT(*) AS NUMERO, `usuario`.`NOMBRE`", " WHERE `tarea_usuario`.`TAREA_ID` = `tarea`.`ID` AND `usuario`.`ID` = `tarea_usuario`.`USUARIO_ID` AND `tarea`.`PROYECTO_ID` = " + main.getProyecto_id());
+        for(String x : tareas_t)
+            System.out.println(x);
+        final String[] years = {"2007", "2008", "2009"};
+        final CategoryAxis yAxis = new CategoryAxis();
+        final NumberAxis xAxis = new NumberAxis();
+        final BarChart<Number,String> bc = new BarChart<Number,String>(xAxis,yAxis);
+        // setup chart
+        bc.setTitle("Horizontal Bar Chart Example");
+        yAxis.setLabel("Year");
+        yAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList(years)));
+        xAxis.setLabel("Price");
+        /*
+        // add starting data
+        XYChart.Series<Number,String> series1 = new XYChart.Series<Number,String>();
+        series1.setName("Data Series 1");
+        XYChart.Series<Number,String> series2 = new XYChart.Series<Number,String>();
+        series2.setName("Data Series 2");
+        XYChart.Series<Number,String> series3 = new XYChart.Series<Number,String>();
+        series3.setName("Data Series 3");
+        series1.getData().add(new XYChart.Data<Number,String>(567, years[0]));
+        series1.getData().add(new XYChart.Data<Number,String>(1292, years[1]));
+        series1.getData().add(new XYChart.Data<Number,String>(2180, years[2]));
+        series2.getData().add(new XYChart.Data<Number,String>(956, years[0]));
+        series2.getData().add(new XYChart.Data<Number,String>(1665, years[1]));
+        series2.getData().add(new XYChart.Data<Number,String>(2450, years[2]));
+        series3.getData().add(new XYChart.Data<Number,String>(800, years[0]));
+        series3.getData().add(new XYChart.Data<Number,String>(1000, years[1]));
+        series3.getData().add(new XYChart.Data<Number,String>(2800, years[2]));
+        bc.getData().add(series1);
+        bc.getData().add(series2);
+        bc.getData().add(series3);
+        */
+        return bc;
     }
     
     private void scriptAgregarEvento(String id, String evento, String fechaInicio, String fechaTermino, String color) {

@@ -91,6 +91,11 @@
                               <Color blue="0.624" green="0.624" red="0.624" fx:id="x211" />
                            </textFill>
                         </Label>
+                        <ScrollPane layoutX="7.0" layoutY="42.0" prefHeight="231.0" prefWidth="652.0">
+                          <content>
+                            <AnchorPane fx:id="estadisticas" minHeight="0.0" minWidth="0.0" />
+                          </content>
+                        </ScrollPane>
                      </children>
                   </AnchorPane>
                </items>

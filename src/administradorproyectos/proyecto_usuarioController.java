@@ -7,6 +7,8 @@
 package administradorproyectos;
 
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ public class proyecto_usuarioController implements Initializable {
     private Button agregar;
     
     ArrayList<String> usuarios_nombres;
+    ArrayList<Integer> usuarios_id;
     DataBase db;
     
     @Override
@@ -54,22 +57,22 @@ public class proyecto_usuarioController implements Initializable {
             }
             
         });
+        
         db = main.getDataBase();
         usuarios_nombres = new ArrayList();
         
-        HashMap<String, String> registro;
-        int numeroRegistros = db.getCount("proyecto_usuario");
-        String nombre;
+        try{
+            ResultSet query = db.select("SELECT `usuario`.`NOMBRE`, `usuario`.`ID` FROM `usuario`, (SELECT `usuario`.`ID` FROM `usuario` RIGHT JOIN `proyecto_usuario` ON `usuario`.`ID` = `proyecto_usuario`.`USUARIO_ID` WHERE `proyecto_usuario`.`PROYECTO_ID` = " + main.getProyecto_id() + ") AS registrados WHERE registrados.`ID` != `usuario`.`ID` GROUP BY `NOMBRE`");
         
-        for(int i = 1; i <= numeroRegistros; i++){
-            registro = db.fetchArray("proyecto_usuario", i);
-            nombre = db.getValueOf("usuario", "NOMBRE", i);
-            
-            if( !registro.get("PROYECTO_ID").matches(main.getProyecto_id()) && !usuarios_nombres.contains(nombre) ){
-                usuarios_nombres.add(nombre);
+            query.beforeFirst();
+
+            while( query.next() ){
+                usuarios_nombres.add( query.getString(1) );
             }
-                
+        }catch(SQLException e){
+            
         }
+        
 
         ObservableList<String> options = FXCollections.observableArrayList( usuarios_nombres );
         usuario.setItems(options);

@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -45,11 +46,19 @@ public class tarea_usuarioController implements Initializable {
         String nombres[] = db.getValuesInColumn("`usuario`, `proyecto_usuario`", "NOMBRE", "WHERE `usuario`.`ID` = `proyecto_usuario`.`USUARIO_ID` AND `proyecto_usuario`.`PROYECTO_ID` = " + main.getProyecto_id() );
         ArrayList<Integer> tareas = db.getIndexOf("tarea", "PROYECTO_ID", String.valueOf( main.getProyecto_id()) );
         
+        HashMap<String, String> registro;
+        ArrayList<String> tareas_nombres = new ArrayList();
+        
+        for(int id_tarea : tareas){
+            registro = db.fetchArray("tarea", id_tarea);
+            tareas_nombres.add( registro.get("TITULO") );
+        }
+        
         ObservableList<String> options = FXCollections.observableArrayList( nombres );
         usuario.setItems(options);
         usuario.setValue("Escoja el usuario: ");
         
-        ObservableList<Integer> options2 = FXCollections.observableArrayList( tareas );
+        ObservableList<String> options2 = FXCollections.observableArrayList( tareas_nombres );
         tarea.setItems(options2);
         tarea.setValue("Asignar a tarea: ");
     }
@@ -65,6 +74,9 @@ public class tarea_usuarioController implements Initializable {
         
         ArrayList<Integer> user_id = db.getIndexOf("usuario", "NOMBRE", user);
         ArrayList<Integer> task_id = db.getIndexOf("tarea", "TITULO", task);
+        
+        System.out.println("Primer valor: " + String.valueOf(user_id.get(0)));
+        System.out.println( "Segundo valor: " +String.valueOf(task_id.get(0)));
         
         String arreglo[] = { String.valueOf(user_id.get(0)) , String.valueOf(task_id.get(0))};
         

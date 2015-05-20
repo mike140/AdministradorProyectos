@@ -35,8 +35,6 @@ public class tarea_usuarioController implements Initializable {
     private ComboBox usuario;
     @FXML
     private ComboBox tarea;
-    @FXML
-    private Button asignar;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -70,15 +68,20 @@ public class tarea_usuarioController implements Initializable {
         
         String arreglo[] = { String.valueOf(user_id.get(0)) , String.valueOf(task_id.get(0))};
         
-        db.insert("tarea_usuario", arreglo );
-        JOptionPane.showMessageDialog(null, "Se ha asignado la tarea al usuario");
+        
+        if(!db.insert("tarea_usuario", arreglo )) {
+            JOptionPane.showMessageDialog(null, "Error ya esta asignada la tarea al usuario");
+            return;
+        } else {
+            JOptionPane.showMessageDialog(null, "Se ha asignado la tarea al usuario");
+            main.cambiarDePantalla("dashboard.fxml", main.getProyecto().getTitulo());
+        }
+        
     }
     
     @FXML
     public void salir(){
-        
-            String proyectName = main.getDataBase().getValueOf("proyecto", "TITULO", Integer.valueOf(main.getProyecto_id()) );
-            main.cambiarDePantalla("dashboard.fxml", proyectName);
+        main.cambiarDePantalla("dashboard.fxml", main.getProyecto().getTitulo());
             
     }
     

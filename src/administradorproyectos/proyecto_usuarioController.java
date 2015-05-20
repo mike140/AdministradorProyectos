@@ -74,13 +74,17 @@ public class proyecto_usuarioController implements Initializable {
         ArrayList<Integer> usuario_id = db.getIndexOf("usuario", "NOMBRE", nombre);
         String values[] = { String.valueOf( usuario_id.get(0) ), main.getProyecto_id(), "2" };
         
-        db.insert("proyecto_usuario", values);
+        if(!db.insert("proyecto_usuario", values)) {
+            JOptionPane.showMessageDialog(null, "Error ya esta agregado el usuario");
+            return;
+        } else {
+            main.cambiarDePantalla("dashboard.fxml", main.getProyecto().getTitulo()); 
+        }
     }
     
     @FXML
     public void salir(){
-            String proyectName = main.getDataBase().getValueOf("proyecto", "TITULO", Integer.valueOf(main.getProyecto_id()) );
-            main.cambiarDePantalla("dashboard.fxml", proyectName); 
+        main.cambiarDePantalla("dashboard.fxml", main.getProyecto().getTitulo()); 
     }
     
 }

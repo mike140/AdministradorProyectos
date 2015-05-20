@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -144,45 +146,49 @@ public class dashboard_controller implements Initializable {
             TitledPane t = new TitledPane(tarea.getValue().getTitulo(), box);
             tareas.getPanes().add(t);
         }
-        estadisticas.getChildren().add(crearGrafica());
+        try {
+            estadisticas.getChildren().add(crearGrafica());
+        } catch (SQLException ex) {
+            
+        }
     }
     
-    protected BarChart<Number, String> crearGrafica() {
-        //SELECT COUNT(*) AS NUMERO, `usuario`.`NOMBRE` FROM `tarea_usuario`, `usuario`, `tarea` WHERE `tarea_usuario`.`TAREA_ID` = `tarea`.`ID` AND `usuario`.`ID` = `tarea_usuario`.`USUARIO_ID` AND `tarea`.`PROYECTO_ID` = 1
-        String tareas_t[] = main.getDataBase().getValuesInColumn("`tarea_usuario`, `usuario`, `tarea` ", 
-                "COUNT(*) AS NUMERO, `usuario`.`NOMBRE`", " WHERE `tarea_usuario`.`TAREA_ID` = `tarea`.`ID` AND `usuario`.`ID` = `tarea_usuario`.`USUARIO_ID` AND `tarea`.`PROYECTO_ID` = " + main.getProyecto_id());
-        for(String x : tareas_t)
-            System.out.println(x);
-        final String[] years = {"2007", "2008", "2009"};
+    protected BarChart<Number, String> crearGrafica() throws SQLException {
+        ResultSet query = main.getDataBase().select("SELECT COUNT(*) AS TOTAL, SUM(IF(`tarea`.`ESTADO` = 1, 1, 0)) AS COMPLEATADAS, `usuario`.`NOMBRE` FROM `tarea_usuario`, `usuario`, `tarea` WHERE `tarea_usuario`.`TAREA_ID` = `tarea`.`ID` AND `usuario`.`ID` = `tarea_usuario`.`USUARIO_ID` AND `tarea`.`PROYECTO_ID` = " + main.getProyecto_id());
+    
+        query.beforeFirst();  
+        ArrayList<String> nombres = new ArrayList<String>();
+        ArrayList<String> tareas = new ArrayList<String>();
+        ArrayList<String> completadas = new ArrayList<String>();
+        while( query.next() ){  
+
+            nombres.add(query.getString(3));
+            tareas.add(query.getString(1) ); 
+            completadas.add(query.getString(2) ); 
+        }
+        final String[] nombresArray = new String[nombres.size()];
+        nombres.toArray(nombresArray);
         final CategoryAxis yAxis = new CategoryAxis();
         final NumberAxis xAxis = new NumberAxis();
         final BarChart<Number,String> bc = new BarChart<Number,String>(xAxis,yAxis);
         // setup chart
-        bc.setTitle("Horizontal Bar Chart Example");
-        yAxis.setLabel("Year");
-        yAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList(years)));
-        xAxis.setLabel("Price");
-        /*
+        bc.setTitle("Tareas por usuario");
+        yAxis.setLabel("Usuarios");
+        yAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList(nombresArray)));
+        xAxis.setLabel("Tareas");
         // add starting data
         XYChart.Series<Number,String> series1 = new XYChart.Series<Number,String>();
-        series1.setName("Data Series 1");
+        series1.setName("Totales");
         XYChart.Series<Number,String> series2 = new XYChart.Series<Number,String>();
-        series2.setName("Data Series 2");
-        XYChart.Series<Number,String> series3 = new XYChart.Series<Number,String>();
-        series3.setName("Data Series 3");
-        series1.getData().add(new XYChart.Data<Number,String>(567, years[0]));
-        series1.getData().add(new XYChart.Data<Number,String>(1292, years[1]));
-        series1.getData().add(new XYChart.Data<Number,String>(2180, years[2]));
-        series2.getData().add(new XYChart.Data<Number,String>(956, years[0]));
-        series2.getData().add(new XYChart.Data<Number,String>(1665, years[1]));
-        series2.getData().add(new XYChart.Data<Number,String>(2450, years[2]));
-        series3.getData().add(new XYChart.Data<Number,String>(800, years[0]));
-        series3.getData().add(new XYChart.Data<Number,String>(1000, years[1]));
-        series3.getData().add(new XYChart.Data<Number,String>(2800, years[2]));
+        series2.setName("Completadas");
+        for(int i = 0; i < nombres.size(); i++) {
+            series1.getData().add(new XYChart.Data<Number,String>(Integer.parseInt(tareas.get(i)), nombresArray[i]));
+        }
+        for(int i = 0; i < nombres.size(); i++) {
+            series2.getData().add(new XYChart.Data<Number,String>(Integer.parseInt(completadas.get(i)), nombresArray[i]));
+        }
         bc.getData().add(series1);
         bc.getData().add(series2);
-        bc.getData().add(series3);
-        */
         return bc;
     }
     
